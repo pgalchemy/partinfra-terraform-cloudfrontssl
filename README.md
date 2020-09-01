@@ -11,7 +11,7 @@ A Terraform module to easily create an SSL-enabled CloudFront distribution for a
 An example which specifies only the required variables:
 ```
 module "example" {
-  source              = "git://github.com/mozilla/partinfra-terraform-cloudfrontssl.git"
+  source              = "github.com/pgalchemy/partinfra-terraform-cloudfrontssl"
 
   origin_domain_name  = "discourse.mozilla-community.org"
   origin_id           = "discoursecdn"
@@ -25,7 +25,7 @@ An example that enables some headers:
 ```
 
 module "example" {
-  source              = "git://github.com/mozilla/partinfra-terraform-cloudfrontssl.git"
+  source              = "github.com/pgalchemy/partinfra-terraform-cloudfrontssl"
 
   origin_domain_name  = "discourse.mozilla-community.org"
   origin_id           = "discoursecdn"
@@ -33,12 +33,12 @@ module "example" {
   acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/00e371ce-a96e-435b-9e76-687ad6sa8231"
 
   headers {
-        enabled = true
-        hsts-enabled = true
-        x-content-type-enabled = true
-        x-frame-options-enabled = true
-        x-xss-protection-enabled = true
-    }
+    enabled = true
+    hsts-enabled = true
+    x-content-type-enabled = true
+    x-frame-options-enabled = true
+    x-xss-protection-enabled = true
+  }
 }
 ```
 ## Reference
@@ -49,9 +49,8 @@ module "example" {
 | `alias`     | The alternate domain name for the distribution.                                                | yes          |  |
 | `origin_id`              | A unique identifier for the origin.                                                        | yes          |  |
 | `acm_certificate_arn`              | The ARN for the ACM cert to use in this distribution.                                                        | yes          |  |
+| `origin_access_identity` | The identity path used to restrict S3 access to Cloudfront | yes |  |
 | `origin_path`            | The folder on the origin to request content from. Must begin with `/` with no tailing `/`.  | no           |    |
-| `origin_http_port`            | The port on the origin host CloudFront will make HTTP requests to.  | no           |    `80` |
-| `origin_https_port`            | The port on the origin host CloudFront will make HTTPS requests to.  | no           |    `443` |
 | `distribution_enabled`           | Whether the CloudFront Distribution is enabled.  | no           |    `true` |
 | `comment`           | A comment to add to the distribution.  | no           |    |
 | `default_root_object`           | The object to return when a user requests the root URL.  | no           |  `index.html`  |
